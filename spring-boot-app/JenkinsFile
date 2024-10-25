@@ -8,22 +8,28 @@ pipeline {
             }
         }
 
-        stage('Checkout from Git') {
+        stage('Git Checkout') {
             steps {
+                echo "Git Checkout..."
                 git branch: 'main', url: 'https://github.com/Shravankumar1989/CI-CD-Pipeline.git'
             }
         }
 
-        stage('Build') {
+        stage('Build and Package') {
             steps {
                 script {
+                    echo "Listing..."
                     sh 'ls -ltr'
-
-                    sh '''
-                    cd spring-boot-app
-                    mvn clean package
-                    '''
+                    
+                    echo 'Build and Package...'
+                    sh 'cd spring-boot-app && mvn clean package'
                 }
+            }
+        }
+        stage('Run Unit Tests') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'mvn test'
             }
         }
     }
