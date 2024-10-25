@@ -1,14 +1,24 @@
-pipeline{
+pipeline {
     agent any
+
     stages {
-        stage('clean workspace'){
-            steps{
+        stage('Clean Workspace') {
+            steps {
                 cleanWs()
             }
         }
-        stage('Checkout from Git'){
-            steps{
+
+        stage('Checkout from Git') {
+            steps {
                 git branch: 'main', url: 'https://github.com/Shravankumar1989/CI-CD-Pipeline.git'
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                script {
+                    sh 'ls -ltr'
+                }
             }
         }
     }
