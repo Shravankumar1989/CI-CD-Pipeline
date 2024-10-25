@@ -8,7 +8,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                echo "I am here"
+                git branch: 'main', url: 'https://github.com/Shravankumar1989/CI-CD-Pipeline.git'
             }
         }
     }
