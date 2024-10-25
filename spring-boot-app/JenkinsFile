@@ -17,20 +17,20 @@ pipeline {
 
         stage('Build and Package') {
             steps {
-                script {
-                    echo "Listing..."
-                    sh 'ls -ltr'
-                    
-                    echo 'Build and Package...'
-                    sh 'cd spring-boot-app && mvn clean package'
-                }
+                echo "Listing..."
+                sh 'ls -ltr'
+                
+                echo 'Build and Package...'
+                sh 'cd spring-boot-app && mvn clean package'
             }
         }
+
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
                 sh 'mvn test'
             }
         }
+
     }
 }
