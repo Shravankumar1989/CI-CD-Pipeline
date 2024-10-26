@@ -1,51 +1,83 @@
 pipeline {
     agent any
 
+    environment {
+        // Set Maven options to prevent OOM issues during build
+        MAVEN_OPTS = '-Xms256m -Xmx512m'
+    }
+
     stages {
+
         stage('Clean Workspace') {
             steps {
+                echo "Cleaning workspace..."
                 cleanWs()
             }
         }
 
         stage('Git Checkout') {
             steps {
-                echo "Git Checkout..."
+                echo "Checking out code from Git..."
                 git branch: 'main', url: 'https://github.com/Shravankumar1989/CI-CD-Pipeline.git'
             }
         }
 
         stage('Build and Package') {
             steps {
-                echo "Listing..."
+                echo "Listing project directory..."
                 sh 'ls -ltr'
-                
-                echo 'Build and Package...'
-                sh 'cd spring-boot-app && mvn clean package'
+
+                echo 'Building and packaging the application...'
+                sh '''
+                   cd spring-boot-app
+                   mvn clean package -DskipTests
+                '''
             }
         }
 
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh 'cd spring-boot-app && mvn test'
+                sh '''
+                   cd spring-boot-app
+                   mvn test
+                '''
             }
         }
 
         stage('Static Code Analysis') {
-          steps {
-            withSonarQubeEnv('sonar-server') {
-                sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.projectName=spring-boot-app -Dsonar.projectKey=spring-boot-app '
+            steps {
+                echo 'Running SonarQube analysis...'
+                withSonarQubeEnv('sonar-server') {
+                    sh '''
+                       cd spring-boot-app
+                       mvn sonar:sonar \
+                       -Dsonar.projectKey=spring-boot-app \
+                       -Dsonar.projectName=spring-boot-app
+                    '''
+                }
             }
-          }
         }
 
-        stage("Quality gate"){
-           steps {
+        stage('Quality Gate Check') {
+            steps {
+                echo 'Checking SonarQube quality gate...'
                 script {
-                    waitForQualityGate abortPipeline: true, credentialsId: 'Sonar-token' 
+                    def qualityGate = waitForQualityGate()
+                    if (qualityGate.status != 'OK') {
+                        error "Pipeline aborted due to SonarQube quality gate failure: ${qualityGate.status}"
+                    }
                 }
-            } 
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
         }
     }
 }
