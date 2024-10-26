@@ -40,6 +40,13 @@ pipeline {
             }
         }
 
+        stage('Verify Build Output') {
+            steps {
+                echo 'Listing files in target/ directory...'
+                sh 'ls -l target/'
+            }
+        }
+
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
@@ -73,27 +80,6 @@ pipeline {
                         error "Pipeline aborted due to SonarQube quality gate failure: ${qualityGate.status}"
                     }
                 }
-            }
-        }
-
-        stage('Upload to Nexus') {
-            steps {
-                echo 'Uploading artifact to Nexus repository...'
-                nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: 'spring-boot-demo',
-                        classifier: '',
-                        file: 'target/spring-boot-web-1.0.jar', // Adjust the path if necessary
-                        type: 'jar'
-                    ]
-                ],
-                credentialsId: NEXUS_CREDENTIALS_ID,
-                groupId: 'com.abhishek',
-                nexusUrl: NEXUS_URL,
-                nexusVersion: 'nexus3',
-                protocol: 'http',
-                repository: NEXUS_REPO,
-                version: '1.0'
             }
         }
     }
