@@ -16,6 +16,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shravankumar1989/CI-CD-Pipeline.git'
             }
         }
+
+        stage('Build and Package') {
+            steps {
+                echo "Listing project directory..."
+                sh 'ls -ltr'
+
+                echo 'Building and packaging the application...'
+                sh '''
+                   cd spring-boot-app
+                   mvn clean package -DskipTests
+                '''
+            }
+        }
     }
 
     post {
