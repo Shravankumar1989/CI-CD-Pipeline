@@ -83,7 +83,7 @@ pipeline {
                     [
                         artifactId: 'spring-boot-demo',
                         classifier: '',
-                        file: 'spring-boot-app/target/spring-boot-web-1.0.jar',
+                        file: 'spring-boot-app/target/spring-boot-web.jar',
                         type: 'jar'
                     ]
                 ],
