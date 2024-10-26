@@ -113,8 +113,7 @@ pipeline {
             steps {
                 echo 'Scanning Docker image...'
                 sh '''
-                    trivy --download-db-only
-                    trivy image ${DOCKER_IMAGE}
+                    trivy image ${DOCKER_IMAGE} > trivyimage.txt
                 '''
             }
         }
