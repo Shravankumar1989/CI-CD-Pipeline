@@ -28,7 +28,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh 'mvn test'
+                sh 'cd spring-boot-app && mvn test'
             }
         }
 
