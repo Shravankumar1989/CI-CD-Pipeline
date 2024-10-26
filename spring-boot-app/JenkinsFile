@@ -70,6 +70,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Nexus') {
+            steps {
+                echo 'Nexus...'
+                script {
+                    configFileProvider([configFile(fileId: 'nexus', variable: 'nexus')]) {
+                      cd spring-boot-app
+                      sh 'mvn deploy --settings $MAVEN_SETTINGS'
+                    }
+                }
+            }
+        }
     }
 
     post {
