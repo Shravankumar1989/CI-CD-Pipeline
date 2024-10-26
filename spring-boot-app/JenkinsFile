@@ -74,7 +74,7 @@ pipeline {
         stage('Nexus') {
             steps {
                 echo 'Nexus...'
-                configFileProvider([configFile(fileId: 'nexus', variable: 'nexus')]) {
+                configFileProvider([configFile(fileId: '39ec0f6c-ab57-47dd-9b24-ae74dc1e586e', variable: 'nexus')]) {
                       cd spring-boot-app
                       sh 'mvn deploy --settings $nexus'
                 }
