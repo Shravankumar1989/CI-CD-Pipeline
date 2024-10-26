@@ -89,7 +89,7 @@ pipeline {
                     ]
                 ],
                 credentialsId: NEXUS_CREDENTIALS_ID,
-                groupId: 'com.abhishek',
+                groupId: 'com.Shravankumar',
                 nexusUrl: NEXUS_URL,
                 nexusVersion: 'nexus3',
                 protocol: 'http',
