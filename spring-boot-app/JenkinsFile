@@ -5,6 +5,12 @@ pipeline {
         maven "maven3"
     }
 
+     environment {
+        NEXUS_URL = 'http://13.234.231.57:8081'
+        NEXUS_REPO = 'spring-boot-app'
+        NEXUS_CREDENTIALS_ID = 'nexus-credentials'
+    }
+
     stages {
 
         stage('Clean Workspace') {
@@ -67,6 +73,27 @@ pipeline {
                         error "Pipeline aborted due to SonarQube quality gate failure: ${qualityGate.status}"
                     }
                 }
+            }
+        }
+
+        stage('Upload to Nexus') {
+            steps {
+                echo 'Uploading artifact to Nexus repository...'
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'spring-boot-demo',
+                        classifier: '',
+                        file: 'target/spring-boot-web-1.0.jar', // Adjust the path if necessary
+                        type: 'jar'
+                    ]
+                ],
+                credentialsId: NEXUS_CREDENTIALS_ID,
+                groupId: 'com.abhishek',
+                nexusUrl: NEXUS_URL,
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                repository: NEXUS_REPO,
+                version: '1.0'
             }
         }
     }
