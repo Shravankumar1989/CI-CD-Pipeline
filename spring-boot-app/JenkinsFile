@@ -119,6 +119,18 @@ pipeline {
             }
         }
 
+        stage('Push Image') {
+            steps {
+                echo 'Push...'
+                sh '''
+                   def dockerImage = docker.image("${DOCKER_IMAGE}")
+                   withDockerRegistry(credentialsId: 'docker-cred', url: 'https://registry.hub.docker.com') {
+                        dockerImage.push()
+                    }
+                '''
+            }
+        }
+
         
 
         stage('Cleanup Trivy Cache') {
