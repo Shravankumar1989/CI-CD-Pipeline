@@ -108,6 +108,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Scan Image') {
+            steps {
+                echo 'Scan Image...'
+                script {
+                    sh 'trivy image ${DOCKER_IMAGE} > trivyimage.txt'
+                }
+            }
+        }
     }
 
     post {
