@@ -79,6 +79,7 @@ pipeline {
         stage('Verify Build Output') {
             steps {
                 echo 'Listing files in target/ directory...'
+                cd spring-boot-app
                 sh 'ls -l target/'
             }
         }
