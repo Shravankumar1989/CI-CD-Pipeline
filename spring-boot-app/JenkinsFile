@@ -34,7 +34,7 @@ pipeline {
 
         stage('Static Code Analysis') {
           steps {
-            withSonarQubeEnv('sonar-server') {
+            withSonarQubeEnv('Sonar-server') {
                 sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.projectName=spring-boot-app -Dsonar.projectKey=spring-boot-app '
             }
           }
