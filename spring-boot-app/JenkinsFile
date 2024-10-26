@@ -109,12 +109,19 @@ pipeline {
             }
         }
 
-        stage('Scan Image') {
+        stage('Scan Docker Image') {
             steps {
-                echo 'Scan Image...'
-                script {
-                    sh 'trivy image ${DOCKER_IMAGE} > trivyimage.txt'
-                }
+                echo 'Scanning Docker image...'
+                sh '''
+                    trivy --download-db-only
+                    trivy image ${DOCKER_IMAGE}
+                '''
+            }
+        }
+        stage('Cleanup Trivy Cache') {
+            steps {
+                echo 'Cleaning up Trivy cache...'
+                sh 'rm -rf /var/lib/jenkins/.cache/trivy/*'
             }
         }
     }
