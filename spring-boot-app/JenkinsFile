@@ -65,7 +65,7 @@ pipeline {
                 echo 'Installing the package to local Maven repository...'
                 sh '''
                    cd spring-boot-app
-                   mvn Install
+                   mvn install
                 '''
             }
         }
