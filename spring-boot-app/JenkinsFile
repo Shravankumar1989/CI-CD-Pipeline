@@ -144,7 +144,7 @@ pipeline {
                 GIT_USER_NAME = "Shravankumar1989"
             }
             steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     sh '''
                         echo 'Update Deployment File...'
                         git config user.email "Shravansahan@gmail.com"
