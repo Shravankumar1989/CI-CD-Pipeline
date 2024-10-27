@@ -8,7 +8,7 @@ Learn more and start using VEX: https://aquasecurity.github.io/trivy/v0.56/docs/
 To disable this notice, set the TRIVY_DISABLE_VEX_NOTICE environment variable.
 
 
-shravankumarp/spring-boot-app:43 (alpine 3.14.10)
+shravankumarp/spring-boot-app:44 (alpine 3.14.10)
 =================================================
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 
