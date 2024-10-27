@@ -5,8 +5,8 @@ pipeline {
         maven "maven3"
     }
 
-    environment {
-        NEXUS_URL = '13.234.231.57:8081'
+    environment { 
+        NEXUS_URL = '13.233.124.191:8081'
         NEXUS_REPO = 'spring-boot-app'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials'
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
