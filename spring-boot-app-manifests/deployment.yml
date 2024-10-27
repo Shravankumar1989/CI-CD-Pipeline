@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: shravankumarp/spring-boot-app:63:${BUILD_NUMBER}:${BUILD_NUMBER}:${BUILD_NUMBER}:${BUILD_NUMBER}:53
+        image: shravankumarp/spring-boot-app:replaceImageTag
         ports:
         - containerPort: 8080
