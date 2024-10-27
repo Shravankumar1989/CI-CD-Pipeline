@@ -2,5 +2,5 @@ projectKey=spring-boot-app
 serverUrl=http://13.233.124.191:9000
 serverVersion=9.9.7.96285
 dashboardUrl=http://13.233.124.191:9000/dashboard?id=spring-boot-app
-ceTaskId=AZLOnJlDkF_Izeyly6UT
-ceTaskUrl=http://13.233.124.191:9000/api/ce/task?id=AZLOnJlDkF_Izeyly6UT
+ceTaskId=AZLOpR7SkF_Izeyly6UU
+ceTaskUrl=http://13.233.124.191:9000/api/ce/task?id=AZLOpR7SkF_Izeyly6UU
