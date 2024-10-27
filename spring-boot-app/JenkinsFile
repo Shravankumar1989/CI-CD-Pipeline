@@ -138,15 +138,16 @@ pipeline {
             }
         }
 
-        stage('Update Deployment File') {
-            environment {
-                GIT_REPO_NAME = 'spring-boot-app-manifests'  // Updated repository name
-                GIT_USER_NAME = 'Shravankumar1989'
-            }
+        stage('Checkoute') {
             steps {
-                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-                    script {
-                        sh '''
+                git branch: 'main', url: 'https://github.com/Shravankumar1989/spring-boot-app-manifests.git'
+            }
+        }
+        stage('Update Deployment File') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                       sh '''
                             echo 'Updating Deployment File...'
                             
                             # Set Git configuration
