@@ -38,7 +38,7 @@ pipeline {
                 echo 'Building and packaging the application...'
                 sh '''
                    cd spring-boot-app
-                   mvn clean package -DskipTests
+                   mvn clean package
                 '''
             }
         }
