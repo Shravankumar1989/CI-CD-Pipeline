@@ -30,25 +30,42 @@ pipeline {
             }
         }
 
-        stage('Build and Package') {
+        stage('Build') {
             steps {
-                echo "Listing project directory..."
-                sh 'ls -ltr'
-
-                echo 'Building and packaging the application...'
+                echo 'Building the project...'
                 sh '''
                    cd spring-boot-app
-                   mvn clean package
+                   mvn clean compile
                 '''
             }
         }
 
-        stage('Run Unit Tests') {
+        stage('Test') {
             steps {
-                echo 'Running unit tests...'
+                echo 'Running tests...'
                 sh '''
                    cd spring-boot-app
                    mvn test
+                '''
+            }
+        }
+
+        stage('Package') {
+            steps {
+                echo 'Packaging the project...'
+                sh '''
+                   cd spring-boot-app
+                   mvn package
+                '''
+            }
+        }
+
+        stage('Install') {
+            steps {
+                echo 'Installing the package to local Maven repository...'
+                sh '''
+                   cd spring-boot-app
+                   mvn Install
                 '''
             }
         }
