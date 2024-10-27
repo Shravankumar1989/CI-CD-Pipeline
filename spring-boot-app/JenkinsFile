@@ -131,15 +131,6 @@ pipeline {
             }
         }
 
-        stage('Remove Local Docker Image') {
-            steps {
-                echo 'Removing Docker image from local...'
-                sh '''
-                   docker rmi ${DOCKER_IMAGE} || true
-                '''
-            }
-        }
-
         stage('Cleanup Trivy Cache') {
             steps {
                 echo 'Cleaning up Trivy cache...'
@@ -185,6 +176,15 @@ pipeline {
                         '''
                     }
                 }
+            }
+        }
+
+        stage('Remove Local Docker Image') {
+            steps {
+                echo 'Removing Docker image from local...'
+                sh '''
+                   docker rmi ${DOCKER_IMAGE} || true
+                '''
             }
         }
     }
