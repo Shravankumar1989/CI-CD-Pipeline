@@ -140,22 +140,41 @@ pipeline {
 
         stage('Update Deployment File') {
             environment {
-                GIT_REPO_NAME = "CI-CD-Pipeline"
-                GIT_USER_NAME = "Shravankumar1989"
+                GIT_REPO_NAME = 'CI-CD-Pipeline'
+                GIT_USER_NAME = 'Shravankumar1989'
             }
             steps {
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                        echo 'Update Deployment File...'
-                        git config user.email "Shravansahan@gmail.com"
-                        git config user.name "Shravankumar Patil"
-                        BUILD_NUMBER=${BUILD_NUMBER}
-                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
-                        git pull 
-                        git add .
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                    '''
+                    script {
+                        sh '''
+                            echo 'Updating Deployment File...'
+                            
+                            # Set Git configuration
+                            git config --global user.email "Shravansahan@gmail.com"
+                            git config --global user.name "Shravankumar Patil"
+        
+                            # Ensure the latest changes are pulled from remote
+                            git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                            
+                            # Set upstream tracking if not already set
+                            git branch --set-upstream-to=origin/main main || true
+                            
+                            # Pull the latest changes
+                            git pull origin main
+                            
+                            # Replace placeholder with build number in the deployment YAML
+                            sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
+                            
+                            # Stage all changes
+                            git add .
+                            
+                            # Commit the changes
+                            git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                            
+                            # Push the changes to the remote repository
+                            git push origin HEAD:main
+                        '''
+                    }
                 }
             }
         }
