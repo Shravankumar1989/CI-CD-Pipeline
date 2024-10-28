@@ -159,8 +159,8 @@ pipeline {
                         echo 'Update Deployment File...'
                         git config user.email "Shravansahan@gmail.com"
                         git config user.name "Shravankumar Patil"
-                        
-                        sed -i "s|shravankumarp/spring-boot-app:|shravankumarp/spring-boot-app:${BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
+                        PREVIOUS_BUILD_NUMBER = "${BUILD_NUMBER.toInteger() - 1}"
+                        sed -i "s|shravankumarp/spring-boot-app:${PREVIOUS_BUILD_NUMBER}|shravankumarp/spring-boot-app:${BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
                         git pull origin main
                         git add .
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}"
