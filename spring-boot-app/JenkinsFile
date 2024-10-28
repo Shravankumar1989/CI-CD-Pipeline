@@ -159,7 +159,7 @@ pipeline {
                         echo 'Update Deployment File...'
                         git config user.email "Shravansahan@gmail.com"
                         git config user.name "Shravankumar Patil"
-                        PREVIOUS_BUILD_NUMBER = ${BUILD_NUMBER - 1}
+                        PREVIOUS_BUILD_NUMBER = $((BUILD_NUMBER - 1))
                         sed -i "s|shravankumarp/spring-boot-app:${PREVIOUS_BUILD_NUMBER}|shravankumarp/spring-boot-app:${BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
                         git pull origin main
                         git add .
