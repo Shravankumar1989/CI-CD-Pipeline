@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment { 
-        NEXUS_URL = '13.233.124.191:8081'
+        NEXUS_URL = '13.127.168.222:8081'
         NEXUS_REPO = 'spring-boot-app'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials'
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
