@@ -9,8 +9,8 @@ pipeline {
         NEXUS_URL = '13.127.168.222:8081'
         NEXUS_REPO = 'spring-boot-app'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials'
-        ARTIFACT_VERSION = "${env.BUILD_NUMBER}"
-        DOCKER_IMAGE = "shravankumarp/spring-boot-app:${env.BUILD_NUMBER}"
+        ARTIFACT_VERSION = "${BUILD_NUMBER}"
+        DOCKER_IMAGE = "shravankumarp/spring-boot-app:${BUILD_NUMBER}"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
 
@@ -160,10 +160,10 @@ pipeline {
                         git config user.email "Shravansahan@gmail.com"
                         git config user.name "Shravankumar Patil"
                         
-                        sed -i "s|shravankumarp/spring-boot-app:|shravankumarp/spring-boot-app:${env.BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
+                        sed -i "s|shravankumarp/spring-boot-app:|shravankumarp/spring-boot-app:${BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
                         git pull origin main
                         git add .
-                        git commit -m "Update deployment image to version ${env.BUILD_NUMBER}"
+                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                     '''
                 }
